@@ -2,23 +2,42 @@ name: Release
 
 on:
   push:
-    tags:
-      - '[0-9]*.[0-9]*'
+    branches:
+      - master
 
 permissions:
-  contents: write  # required to create the GitHub Release and upload assets
+  contents: write  # required to create the GitHub Release, push tags and upload assets
 
 jobs:
+  tag:
+    runs-on: ubuntu-latest
+    outputs:
+      new_tag: ${{ steps.tag_version.outputs.new_tag }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # needed so the action can see the full commit history and previous tags
+
+      - name: Bump version and push tag
+        id: tag_version
+        uses: mathieudutour/github-tag-action@v6.2
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          tag_prefix: ''            # existing tags are plain "2.0.0", no "v" prefix
+          default_bump: minor       # fall back to minor when commits don't specify fix/feat
+          release_branches: master
+
   build-and-release:
+    needs: tag
+    if: needs.tag.outputs.new_tag != ''
     runs-on: ubuntu-latest  # free-tier Linux runner
 
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-
-      - name: Extract version from tag
-        id: version
-        run: echo "value=${GITHUB_REF_NAME}" >> "$GITHUB_OUTPUT"
+        with:
+          ref: ${{ needs.tag.outputs.new_tag }}
 
       - name: Set up JDK 17
         uses: actions/setup-java@v4
@@ -32,11 +51,11 @@ jobs:
           gradle-version: '9.6.0'
 
       - name: Build standalone jar
-        run: gradle clean shadowJar -Pversion=${{ steps.version.outputs.value }} --no-daemon
+        run: gradle clean shadowJar -Pversion=${{ needs.tag.outputs.new_tag }} --no-daemon
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: ${{ github.ref_name }}
+          tag_name: ${{ needs.tag.outputs.new_tag }}
           generate_release_notes: true
-          files: build/libs/dublime-${{ steps.version.outputs.value }}-all.jar
+          files: build/libs/dublime-${{ needs.tag.outputs.new_tag }}-all.jar
