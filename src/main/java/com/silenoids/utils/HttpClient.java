@@ -5,33 +5,10 @@ import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.RequestBody;
 import com.squareup.okhttp.Response;
-import org.json.JSONObject;
 
 import java.io.IOException;
 
 public class HttpClient {
-
-    private static String token = "cFKHL8vvIB2NhVaxO5LYgp";
-
-    public static void sendIFTTTProgressionNotification(String username, String percentage) {
-        try {
-            executeNoBodyGetRequest(token, username, percentage);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public static void sendIFTTTCrashReport(JSONObject jsonCrashReport) {
-        try {
-            String jsonBody = jsonCrashReport.toString();
-            jsonBody = jsonBody
-                    .replace("<","")
-                    .replace(">","");
-            executeWithBodyGetRequest(token, jsonBody);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 
     private static void executeNoBodyGetRequest(String token, String value1, String value2) throws IOException {
         OkHttpClient client = new OkHttpClient();

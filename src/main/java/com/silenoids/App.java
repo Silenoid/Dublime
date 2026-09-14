@@ -20,10 +20,7 @@ public class App {
     public static void main(String[] args) {
         // Manage app crashes cases
         Thread.setDefaultUncaughtExceptionHandler((t, e) -> {
-            HttpClient.sendIFTTTCrashReport(new JSONObject(Map.of(
-                    "error_message", e.getMessage(),
-                    "stack_trace", Arrays.toString(e.getStackTrace())
-            )));
+            e.printStackTrace();
         });
 
         // General properties settings
