@@ -1,6 +1,10 @@
 package com.silenoids.utils;
 
-import com.squareup.okhttp.*;
+import com.squareup.okhttp.MediaType;
+import com.squareup.okhttp.OkHttpClient;
+import com.squareup.okhttp.Request;
+import com.squareup.okhttp.RequestBody;
+import com.squareup.okhttp.Response;
 import org.json.JSONObject;
 
 import java.io.IOException;

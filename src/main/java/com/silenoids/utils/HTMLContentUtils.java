@@ -1,6 +1,14 @@
 package com.silenoids.utils;
 
-import static j2html.TagCreator.*;
+import static j2html.TagCreator.body;
+import static j2html.TagCreator.br;
+import static j2html.TagCreator.code;
+import static j2html.TagCreator.div;
+import static j2html.TagCreator.h1;
+import static j2html.TagCreator.h2;
+import static j2html.TagCreator.h3;
+import static j2html.TagCreator.img;
+import static j2html.TagCreator.p;
 
 public class HTMLContentUtils {
     public static String getHelpContent() {

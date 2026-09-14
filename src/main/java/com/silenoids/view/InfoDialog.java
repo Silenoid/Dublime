@@ -2,7 +2,6 @@ package com.silenoids.view;
 
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
-import com.intellij.uiDesigner.core.Spacer;
 import com.silenoids.utils.HTMLContentUtils;
 
 import javax.swing.*;
