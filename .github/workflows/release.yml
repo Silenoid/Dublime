@@ -3,7 +3,7 @@ name: Release
 on:
   push:
     branches:
-      - master
+      - main
 
 permissions:
   contents: write  # required to create the GitHub Release, push tags and upload assets
@@ -26,7 +26,7 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           tag_prefix: ''            # existing tags are plain "2.0.0", no "v" prefix
           default_bump: minor       # fall back to minor when commits don't specify fix/feat
-          release_branches: master
+          release_branches: main
 
   build-and-release:
     needs: tag
