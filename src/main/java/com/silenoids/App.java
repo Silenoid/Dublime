@@ -44,7 +44,7 @@ public class App {
         SwingUtilities.invokeLater(() -> {
             MainView mainView = new MainView();
             JFrame frame = new JFrame("Dublime");
-            frame.setSize(1600, 900);
+            frame.setSize(1280, 720);
             frame.setLocationRelativeTo(null);  //center
             frame.setContentPane(mainView.mainPanel);
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
