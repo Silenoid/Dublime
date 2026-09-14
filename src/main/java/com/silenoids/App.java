@@ -20,10 +20,7 @@ public class App {
     public static void main(String[] args) {
         // Manage app crashes cases
         Thread.setDefaultUncaughtExceptionHandler((t, e) -> {
-            HttpClient.sendIFTTTCrashReport(new JSONObject(Map.of(
-                    "error_message", e.getMessage(),
-                    "stack_trace", Arrays.toString(e.getStackTrace())
-            )));
+            e.printStackTrace();
         });
 
         // General properties settings
@@ -47,7 +44,7 @@ public class App {
         SwingUtilities.invokeLater(() -> {
             MainView mainView = new MainView();
             JFrame frame = new JFrame("Dublime");
-            frame.setSize(1600, 900);
+            frame.setSize(1280, 720);
             frame.setLocationRelativeTo(null);  //center
             frame.setContentPane(mainView.mainPanel);
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
